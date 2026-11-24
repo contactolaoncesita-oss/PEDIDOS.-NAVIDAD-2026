@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pedidos Cajitas de Navidad · La Oncesita</title>
+<meta property="og:image" content="fotos/grande-cerrada.jpg">
+<meta name="description" content="Haz tu pedido de Cajitas de Navidad de La Oncesita. Hecho con amor, cupos limitados.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --menta:#BFE9DF; --menta-osc:#7CCFC0; --turquesa:#3FA89A; --celeste:#54C3BE;
+    --texto:#24443F; --blanco:#FFFFFF; --rojo:#C8463D; --suave:#EAF7F3;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Montserrat,system-ui,sans-serif;color:var(--texto);background:var(--menta);line-height:1.45}
+  header{text-align:center;padding:28px 16px 10px}
+  header .logo{display:block;width:min(240px,62vw);height:auto;margin:0 auto 14px}
+  h1{font-weight:800;text-transform:uppercase;font-size:1.5rem;margin:0}
+  .sub{margin:6px 0 0;font-size:.95rem;text-wrap:balance}
+  .saludo{max-width:620px;margin:14px auto 12px;font-size:1rem;line-height:1.55;text-wrap:balance}
+  .exclama{display:block;margin-top:6px;font-weight:600;white-space:nowrap}
+  @media(max-width:600px){header{padding-left:10px;padding-right:10px}h1{font-size:1.12rem;white-space:nowrap}.saludo{font-size:.93rem;line-height:1.5}}
+  main{max-width:640px;margin:16px auto 40px;padding:0 14px}
+  .card{background:var(--blanco);border-radius:18px;padding:22px;margin-bottom:16px;box-shadow:0 4px 14px rgba(36,68,63,.08)}
+  h2{font-size:1rem;text-transform:uppercase;letter-spacing:.04em;margin:0 0 14px;font-weight:800}
+  label{display:block;font-weight:600;font-size:.9rem;margin:12px 0 4px}
+  .opc{font-weight:400;color:#5f7d78;font-size:.8rem}
+  input,select,textarea{width:100%;padding:11px 12px;border:1.5px solid var(--menta-osc);border-radius:10px;font:inherit;background:var(--suave);color:var(--texto)}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--turquesa);background:var(--blanco)}
+  textarea{min-height:70px;resize:vertical}
+  .caja{padding:14px 0 18px;border-bottom:1px dashed var(--menta-osc)}
+  .caja:last-child{border-bottom:0;padding-bottom:0}
+  .foto{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:1/1;background:var(--suave)}
+  .foto img{width:100%;height:100%;object-fit:cover;display:block}
+  .vistas{position:absolute;left:10px;bottom:10px;display:flex;gap:6px}
+  .vistas button{border:0;border-radius:20px;padding:6px 12px;font:inherit;font-size:.78rem;font-weight:600;background:rgba(255,255,255,.85);color:var(--texto);cursor:pointer}
+  .vistas button.on{background:var(--turquesa);color:#fff}
+  .info{padding-top:10px}
+  .caja b{display:block;font-size:1.05rem}
+  .caja small{color:#5f7d78}
+  .contenido{font-size:.86rem;margin:6px 0 8px}
+  .pie{display:flex;justify-content:space-between;align-items:center}
+  .precio{color:var(--turquesa);font-weight:800;font-size:1.1rem}
+  .cant{display:flex;align-items:center;gap:6px}
+  .cant button{width:34px;height:34px;border-radius:50%;border:0;background:var(--menta);font-size:1.2rem;font-weight:800;color:var(--texto);cursor:pointer}
+  .cant input{width:46px;text-align:center;padding:6px;background:var(--blanco)}
+  .radios{display:flex;gap:10px;flex-wrap:wrap}
+  .radios label{flex:1;min-width:140px;margin:0;border:1.5px solid var(--menta-osc);border-radius:10px;padding:10px;cursor:pointer;font-weight:600;background:var(--suave)}
+  .radios input{width:auto;margin-right:6px}
+  .radios label:has(input:checked){background:var(--menta);border-color:var(--turquesa)}
+  .total{display:flex;justify-content:space-between;font-size:1.15rem;font-weight:800;margin-top:6px}
+  .nota{font-size:.82rem;color:#5f7d78;margin:6px 0 0}
+  .aviso{font-size:.88rem;font-weight:600;margin:8px 0 0;padding:10px 12px;background:var(--suave);border-radius:10px}
+  .aviso a{color:var(--turquesa)}
+  .botones{display:grid;gap:10px;margin-top:16px}
+  a.btn{text-decoration:none;text-align:center}
+  a.btn.btn2{background:var(--blanco);color:var(--turquesa);border:2px solid var(--turquesa)}
+  .error{color:var(--rojo);font-size:.85rem;margin-top:6px;display:none}
+  .btn{display:block;width:100%;border:0;border-radius:14px;padding:16px;font:inherit;font-weight:800;font-size:1.05rem;background:var(--turquesa);color:var(--blanco);cursor:pointer;text-transform:uppercase;letter-spacing:.04em}
+  .btn:hover{filter:brightness(1.05)}
+  .btn:disabled{background:#9bb;cursor:not-allowed}
+  .cerrado{background:var(--blanco);border-radius:18px;padding:26px;text-align:center;display:none}
+  .oculto{display:none}
+  footer{text-align:center;font-size:.8rem;padding:0 16px 30px}
+  footer a{color:var(--texto)}
+  .gracias{display:none;text-align:center}
+  .fila{display:grid;grid-template-columns:2fr 1fr;gap:10px}
+  .fila label{margin-top:12px}
+</style>
+</head>
+<body>
+
+<header>
+  <img class="logo" src="fotos/logo-blanco.png" alt="La Oncesita" width="800" height="455">
+  <h1>🎄 Cajitas de Navidad 2026 🎄</h1>
+  <p class="saludo">Esta Navidad queremos ser parte de tu mesa. Preparamos cada cajita a mano y con mucho cariño, para que compartas un momento dulce con quienes más quieres.<span class="exclama">¡Que tengas una linda celebración!</span></p>
+  <p class="sub">Cupos limitados · Pedidos hasta el <span id="txtCierre"></span></p>
+</header>
+
+<main>
+  <div class="cerrado" id="cerrado">
+    <h2>Pedidos cerrados</h2>
+    <p>¡Gracias por tanto cariño! Este año ya cerramos los pedidos de Navidad. Síguenos en Instagram para las próximas novedades 💚</p>
+  </div>
+
+  <form id="form" novalidate>
+    <section class="card">
+      <h2>1. Elige tus cajitas</h2>
+      <div id="listaCajas"></div>
+      <p class="error" id="errCajas">Elige al menos una cajita.</p>
+    </section>
+
+    <section class="card">
+      <h2>2. Tus datos</h2>
+      <label for="nombre">Nombre y apellido</label>
+      <input id="nombre" autocomplete="name" placeholder="Camila Rojas">
+      <label for="telefono">WhatsApp</label>
+      <input id="telefono" type="tel" inputmode="tel" placeholder="+56 9 1234 5678" autocomplete="tel">
+    </section>
+
+    <section class="card">
+      <h2>3. Entrega</h2>
+      <div class="radios">
+        <label><input type="radio" name="entrega" value="Retiro" checked> Retiro</label>
+        <label><input type="radio" name="entrega" value="Despacho"> Despacho <span class="opc">(costo adicional)</span></label>
+      </div>
+      <p class="nota" id="notaRetiro"></p>
+      <div id="bloqueDespacho" class="oculto">
+        <div class="fila">
+          <div>
+            <label for="direccion">Dirección (calle y número)</label>
+            <input id="direccion" autocomplete="address-line1" placeholder="Los Aromos 1234">
+          </div>
+          <div>
+            <label for="depto">Depto / casa</label>
+            <input id="depto" autocomplete="address-line2" placeholder="Depto 52">
+          </div>
+        </div>
+        <label for="comuna">Comuna</label>
+        <input id="comuna" autocomplete="address-level2" placeholder="Ñuñoa">
+        <p class="nota" id="notaDespacho"></p>
+      </div>
+      <label for="fecha">Fecha preferida</label>
+      <select id="fecha"></select>
+      <p class="nota">*Si necesitas otra fecha, consulta por disponibilidad.</p>
+    </section>
+
+    <section class="card">
+      <h2>Resumen</h2>
+      <div id="resumen" class="nota">Aún no eliges cajitas.</div>
+      <div class="total"><span id="lblTotal">Total</span><span id="total">$0</span></div>
+      <p class="nota" id="notaPago"></p>
+      <p class="error" id="errDatos">Revisa los campos marcados en rojo.</p>
+      <p class="error" id="errEnvio">No pudimos registrar tu pedido. Revisa tu conexión e inténtalo de nuevo.</p>
+      <br>
+      <button class="btn" type="submit" id="enviar">Enviar pedido</button>
+    </section>
+  </form>
+
+  <section class="card gracias" id="gracias">
+    <h2>¡Gracias por tu pedido! 🎁</h2>
+    <p id="lineaPedido">Tu número de pedido es <b id="nPedido"></b>.</p>
+    <p id="txtGracias" class="aviso"></p>
+    <div class="botones">
+      <a class="btn conWsp" id="btnWsp" href="#" target="_blank" rel="noopener">Avisar por WhatsApp</a>
+      <a class="btn btn2" id="btnIg" href="#" target="_blank" rel="noopener">Avisar por Instagram</a>
+    </div>
+  </section>
+</main>
+
+<footer>La Oncesita · Hecho con amor · <a id="linkIg" href="#" target="_blank" rel="noopener">Instagram</a></footer>
+
+<script>
+/* =========================================================
+   CONFIGURACIÓN — edita solo esta parte
+   ========================================================= */
+const CONFIG = {
+  // URL de tu Google Apps Script (termina en /exec). Ver README, paso 1.
+  planilla: "https://script.google.com/macros/s/AKfycby9E10gvP3vJlv4HTjdbmwINHXEt3gFUkDQJK_dn5DrhbDU0WqLb0pm5TMQeO6gtfegpg/exec",
+
+  instagram: "https://www.instagram.com/la.oncesita",
+
+  // Tu WhatsApp con código de país, solo números (ej. 56912345678). Si lo dejas vacío, solo se ofrece Instagram.
+  whatsapp: "56936340038",
+
+  // Último día para pedir (año-mes-día). Después de este día el formulario se cierra solo.
+  cierre: "2026-12-18",
+
+  // Cajitas: nombre, descripción y precio (en pesos, sin puntos)
+  cajas: [
+    { id:"pequena", nombre:"Cajita Pequeña", desc:"Ideal para amigx secretx o compañerxs de trabajo", precio:5000,
+      contenido:"Galletas de jengibre decoradas, merengues, galletas de mantequilla bañadas en chocolate y un alfajor de nuez.",
+      fotos:["fotos/pequena-abierta.jpg","fotos/pequena-cerrada.jpg"] },
+    { id:"mediana", nombre:"Cajita Mediana", desc:"Para la familia y amigxs", precio:8000,
+      contenido:"Galletas de jengibre, galletas de mantequilla (algunas bañadas en chocolate), merengues rellenos, cookies con chips y alfajores de maicena en forma de pino.",
+      fotos:["fotos/mediana-abierta.jpg","fotos/mediana-cerrada.jpg"] },
+    { id:"grande",  nombre:"Cajita Grande",  desc:"Para la mesa de Navidad, ¡alcanza para todxs!", precio:15000,
+      contenido:"Galletas de jengibre, galletas de mantequilla (algunas bañadas en chocolate), merengues, cookies con chips, cookies de chocolate, alfajores de maicena en forma de pino, alfajores de nuez, brownies decorados y calugas.",
+      fotos:["fotos/grande-abierta.jpg","fotos/grande-cerrada.jpg"] },
+  ],
+
+  fechas: ["Lunes 21 de diciembre","Martes 22 de diciembre","Miércoles 23 de diciembre","Jueves 24 de diciembre"],
+
+  notaRetiro:   "Retiro en la comuna de San Miguel. Te enviamos la dirección exacta por WhatsApp al confirmar.",
+  notaDespacho: "El despacho tiene un costo adicional según tu comuna, que no está incluido en el total. Te lo confirmamos al coordinar el pago.",
+  notaPago:     "Pago por transferencia.",
+  textoGracias: "Por favor, avísanos por Instagram o WhatsApp que completaste el formulario, así coordinamos el pago. ¡Gracias por preferir lo hecho en casa! 💚"
+};
+/* ========================================================= */
+
+const $ = id => document.getElementById(id);
+const pesos = n => "$" + Math.round(n).toLocaleString("es-CL");
+
+const fechaCierre = new Date(CONFIG.cierre + "T23:59:59-03:00");
+$("txtCierre").textContent = fechaCierre.toLocaleDateString("es-CL",{weekday:"long",day:"numeric",month:"long"});
+if (new Date() > fechaCierre) { $("form").style.display="none"; $("cerrado").style.display="block"; }
+
+$("listaCajas").innerHTML = CONFIG.cajas.map(c => `
+  <div class="caja">
+    <div class="foto">
+      <img id="img_${c.id}" src="${c.fotos[0]}" alt="${c.nombre} abierta" loading="lazy" width="800" height="800">
+      <div class="vistas">
+        <button type="button" class="on" data-id="${c.id}" data-f="0">Abierta</button>
+        <button type="button" data-id="${c.id}" data-f="1">Cerrada</button>
+      </div>
+    </div>
+    <div class="info">
+      <b>${c.nombre}</b><small>${c.desc}</small>
+      <p class="contenido">${c.contenido}</p>
+      <div class="pie">
+        <span class="precio">${pesos(c.precio)}</span>
+        <div class="cant">
+          <button type="button" data-id="${c.id}" data-d="-1" aria-label="Quitar">−</button>
+          <input id="q_${c.id}" type="number" min="0" max="50" value="0" inputmode="numeric" aria-label="Cantidad ${c.nombre}">
+          <button type="button" data-id="${c.id}" data-d="1" aria-label="Agregar">+</button>
+        </div>
+      </div>
+    </div>
+  </div>`).join("");
+document.querySelectorAll(".vistas button").forEach(b => b.onclick = () => {
+  const c = CONFIG.cajas.find(x => x.id === b.dataset.id), img = $("img_" + c.id);
+  img.src = c.fotos[+b.dataset.f]; img.alt = c.nombre + (b.dataset.f === "0" ? " abierta" : " cerrada");
+  b.parentElement.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b));
+});
+document.querySelectorAll(".cant button").forEach(b => b.onclick = () => {
+  const i = $("q_" + b.dataset.id);
+  i.value = Math.max(0, Math.min(50, (+i.value||0) + +b.dataset.d)); calcular();
+});
+document.querySelectorAll(".cant input").forEach(i => i.oninput = calcular);
+
+$("fecha").innerHTML = '<option value="">Elige una fecha</option>' + CONFIG.fechas.map(f=>`<option>${f}</option>`).join("");
+$("notaRetiro").textContent = CONFIG.notaRetiro;
+$("notaDespacho").textContent = CONFIG.notaDespacho;
+$("notaPago").textContent = CONFIG.notaPago;
+$("txtGracias").textContent = CONFIG.textoGracias;
+$("linkIg").href = CONFIG.instagram;
+$("btnIg").href = CONFIG.instagram;
+const wspNum = (CONFIG.whatsapp||"").replace(/\D/g,"");
+const wspUrl = txt => `https://wa.me/${wspNum}` + (txt ? `?text=${encodeURIComponent(txt)}` : "");
+if (!wspNum) document.querySelectorAll(".conWsp").forEach(e => e.style.display = "none");
+
+const entrega = () => document.querySelector('input[name="entrega"]:checked').value;
+document.querySelectorAll('input[name="entrega"]').forEach(r => r.onchange = () => {
+  const d = entrega() === "Despacho";
+  $("bloqueDespacho").classList.toggle("oculto", !d);
+  $("notaRetiro").classList.toggle("oculto", d);
+  calcular();
+});
+
+const items = () => CONFIG.cajas.map(c => ({...c, cant: +$("q_"+c.id).value||0})).filter(c => c.cant>0);
+function calcular(){
+  const it = items();
+  $("resumen").innerHTML = it.length ? it.map(c=>`${c.cant} × ${c.nombre} — ${pesos(c.precio*c.cant)}`).join("<br>") + (entrega()==="Despacho" ? "<br>+ Despacho: costo adicional según comuna" : "") : "Aún no eliges cajitas.";
+  $("total").textContent = pesos(it.reduce((s,c)=>s+c.precio*c.cant,0));
+  $("lblTotal").textContent = entrega()==="Despacho" ? "Total sin despacho" : "Total";
+  if (it.length) $("errCajas").style.display="none";
+}
+calcular();
+
+function marcar(el, ok){ el.style.borderColor = ok ? "" : "var(--rojo)"; return ok; }
+document.querySelectorAll("input,select").forEach(el => el.addEventListener("input", () => el.style.borderColor=""));
+
+$("form").onsubmit = async e => {
+  e.preventDefault();
+  $("errEnvio").style.display = "none";
+  const it = items();
+  let ok = true;
+  if (!it.length){ $("errCajas").style.display="block"; ok=false; }
+  ok = marcar($("nombre"), $("nombre").value.trim().length>2) && ok;
+  ok = marcar($("telefono"), $("telefono").value.replace(/\D/g,"").length>=8) && ok;
+  ok = marcar($("fecha"), !!$("fecha").value) && ok;
+  const desp = entrega()==="Despacho";
+  if (desp){
+    ok = marcar($("direccion"), $("direccion").value.trim().length>3) && ok;
+    ok = marcar($("comuna"), $("comuna").value.trim().length>2) && ok;
+  }
+  $("errDatos").style.display = ok ? "none" : "block";
+  if (!ok) return;
+
+  const n = id => +($("q_"+id)?.value)||0;
+  const pedido = {
+    fecha_pedido: new Date().toLocaleString("es-CL"),
+    nombre: $("nombre").value.trim(),
+    telefono: $("telefono").value.trim(),
+    pequena: n("pequena"), mediana: n("mediana"), grande: n("grande"),
+    detalle: it.map(c=>`${c.cant} x ${c.nombre}`).join(", "),
+    total: it.reduce((s,c)=>s+c.precio*c.cant,0),
+    entrega: entrega(),
+    direccion: desp ? $("direccion").value.trim() : "",
+    depto: desp ? $("depto").value.trim() : "",
+    comuna: desp ? $("comuna").value.trim() : "",
+    fecha_entrega: $("fecha").value
+  };
+
+  const btn = $("enviar");
+  btn.disabled = true; btn.textContent = "Enviando…";
+  try {
+    let numero = "";
+    if (!/^https:/.test(CONFIG.planilla)) {
+      numero = "LO-4827";
+      $("txtGracias").textContent = CONFIG.textoGracias + " (Vista previa: este pedido no se guardó porque falta conectar la planilla.)";
+    } else {
+      const r = await fetch(CONFIG.planilla, { method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"}, body: JSON.stringify(pedido) });
+      try { numero = (await r.json()).pedido || ""; } catch(_) {}
+    }
+    if (numero) $("nPedido").textContent = numero;
+    else $("lineaPedido").textContent = "Tu pedido quedó registrado.";
+    const msg = numero
+      ? `¡Hola! Completé el formulario de las Cajitas de Navidad 🎄 Mi pedido es ${numero}, a nombre de ${pedido.nombre}.`
+      : `¡Hola! Completé el formulario de las Cajitas de Navidad 🎄 Mi pedido está a nombre de ${pedido.nombre}.`;
+    if (wspNum) $("btnWsp").href = wspUrl(msg);
+    $("form").style.display = "none";
+    $("gracias").style.display = "block";
+    window.scrollTo(0,0);
+  } catch(err) {
+    $("errEnvio").style.display = "block";
+    btn.disabled = false; btn.textContent = "Enviar pedido";
+  }
+};
+</script>
+</body>
+</html>
